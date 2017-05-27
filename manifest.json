@@ -1,6 +1,6 @@
 {
-  "name": "ExtensionForYou",
-  "description": "Capture and save",
+  "name": "Screen Recorder",
+  "description": "Record a video of your computer screen",
   "version": "0.1",
   "manifest_version": 2,
   "icons": {
