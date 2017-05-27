@@ -14,6 +14,11 @@ window.btnStop = document.getElementById("stop");
 window.ourTimer = document.getElementById("timer");
 window.volume = document.getElementById("volume");
 
+window.volume.value = window.localStorage.getItem( 'recVolume' );
+recVolume=volume.value;
+gainNode1.gain.value = recVolume;
+
+
 chrome.runtime.sendMessage({checkRecState: "what"}, function(response) {
 	if (response.state=="recording" || response.state=="paused"){
 		winRec.style.display="none";
@@ -50,6 +55,7 @@ volume.addEventListener('input', changeRecordingLevel );
 function changeRecordingLevel( event ) {
 	recVolume=volume.value;
 	gainNode1.gain.value = recVolume;
+        window.localStorage.setItem( 'recVolume', recVolume );
 }
 
 function getUserMediaError(error) {
