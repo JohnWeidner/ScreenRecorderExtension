@@ -26,6 +26,31 @@
                color: white;
                border-radius: 30px;           
            }
+        h1 {
+          max-width: 524px;
+          text-align: center;
+          font-weight: 300;
+          letter-spacing: 1.1px;
+          margin: 0 auto;        
+        }
+        #logo {
+          margin: 30px auto;
+          display: block;
+        }
+        #sampleIcon {
+           height:20px;
+           width: 20px;
+           position: relative;
+           top: 3px;
+           padding: 0 2px;        
+        }
+        #instructions {
+           font-size: 14pt;
+           margin: 30px auto;
+           display: block;
+           max-width: 444px;
+           font-weight: 200;        
+        }
 	</style>
 </head>
 <body>
@@ -34,6 +59,13 @@
         <div id="grantRequest">
                Allow Screen Recorder to use your microphone.
         </div>
+    </div>
+    <img id='logo' src='icon.png' alt=’Screen Recorder' />
+    <h1>Welcome to Screen Recorder</h1>
+    <div id='instructions'>
+         Tap the 
+         <img id='sampleIcon' src='icon.png' alt=’Screen Recorder' /> icon at the top
+         right of your browser to start and stop recording.
     </div>
 	<script src="install.js"></script>
 </body>
