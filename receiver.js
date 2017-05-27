@@ -44,10 +44,13 @@ btnStop.addEventListener('click', function(event) {
 	StopRecording();
 });
 
-volume.addEventListener('change', function(event) {
+volume.addEventListener('change', changeRecordingLevel );
+volume.addEventListener('input', changeRecordingLevel );
+
+function changeRecordingLevel( event ) {
 	recVolume=volume.value;
 	gainNode1.gain.value = recVolume;
-});
+}
 
 function getUserMediaError(error) {
   console.log('navigator.webkitGetUserMedia() error: ', error);
