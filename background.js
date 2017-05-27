@@ -19,6 +19,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+      //console.log( 'in listener recType=' + recType + ' pauseRecording=' + request.pauseRecording );
 		if(request.prepareRecording=="on")PrepareRecording(request.recVolume);
 		if(request.prepareTabRecording=="on")PrepareTabRecording(request.recVolume);
 		if(request.stopRecording=="on")StopRecording();
@@ -45,6 +46,7 @@ function PrepareTabRecording(recVolume){
 }
 
 chrome.tabs.onActivated.addListener(function(e){
+        //console.log( 'in tabs.onActivated recType=' + recType + ' rec.state=' + rec.state );
 	if(recType=="tab" && rec.state=="recording" && e.tabId!=recordingTab){
 		PauseRecording();
 		OkToResume=false;
@@ -73,7 +75,7 @@ function PrepareRecording(recVolume){
 }
 function onAccessApproved(id, options) {
 	if (!id) {
-		console.log('Access rejected.');
+		//console.log('Access rejected.');
 		return;
 	}
 
@@ -106,12 +108,12 @@ function StartRecording(stream){
         chrome.browserAction.setIcon({path : "icon_red.png"});
 }
 function getUserMediaError(error){
-  console.log('navigator.webkitGetUserMedia() error: ', error);
+  //console.log('navigator.webkitGetUserMedia() error: ', error);
 }
 function PauseRecording(){
 	rec.pause();
 	clearInterval(runner);
-        chrome.browserAction.setIcon({path : "icon_yellow.png"});
+        chrome.browserAction.setIcon({path : "icon.png"});
 }
 function ResumeRecording(){
 	rec.resume();
@@ -133,3 +135,4 @@ function mainTimer() {
 	date.setSeconds(x);
 	var result = date.toISOString().substr(11, 8);
 };
+//console.log( 'end of background.js' );

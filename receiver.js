@@ -13,13 +13,18 @@ window.btnResume = document.getElementById("resume");
 window.btnStop = document.getElementById("stop");
 window.ourTimer = document.getElementById("timer");
 window.volume = document.getElementById("volume");
+window.tooLoud = document.getElementById( "tooLoud" );
 
-window.volume.value = window.localStorage.getItem( 'recVolume' );
-recVolume=volume.value;
-gainNode1.gain.value = recVolume;
+var savedVol = window.localStorage.getItem( 'recVolume' );
+if ( savedVol ) {
+    window.volume.value = savedVol ; 
+    recVolume = savedVol;
+    gainNode1.gain.value = savedVol ;
+}
 
 
 chrome.runtime.sendMessage({checkRecState: "what"}, function(response) {
+        console.log( 'sendMessage handler response.state=' + response.state );
 	if (response.state=="recording" || response.state=="paused"){
 		winRec.style.display="none";
 		winPause.style.display="block";
@@ -98,6 +103,7 @@ function vumeter(stream){
 	var javascriptNode = audioContext1.createScriptProcessor(1024, 1, 1);
 	dest1.connect(javascriptNode);
 	javascriptNode.connect(audioContext1.destination);
+        var greenCount = 0;
 	javascriptNode.onaudioprocess = function(event){
 		var inpt_L = event.inputBuffer.getChannelData(0);
 		var instant_L = 0.0;
@@ -111,7 +117,22 @@ function vumeter(stream){
 		old_level_L = instant_L;
 		cnvs_cntxt.clearRect(0, 0, cnvs.width, cnvs.height);
 		cnvs_cntxt.fillStyle = '#00ff00';
-		cnvs_cntxt.fillRect(10,10,(cnvs.width-20)*(instant_L/max_level_L),(cnvs.height-20)); // x,y,w,h
+                var width = (cnvs.width-20)*(instant_L/max_level_L);
+                var max_green = cnvs.width * 0.75 ;
+                if ( width > max_green ) {
+   		    cnvs_cntxt.fillRect(10,10,max_green,(cnvs.height-20)); // x,y,w,h
+   		    cnvs_cntxt.fillStyle = '#ff0000';
+   		    cnvs_cntxt.fillRect(max_green,10,width-max_green,(cnvs.height-20)); // x,y,w,h
+                    tooLoud.style.opacity = 1;
+                    greenCount = 0;
+                }
+                else {
+   		    cnvs_cntxt.fillRect(10,10,width,(cnvs.height-20)); // x,y,w,h
+                    greenCount++ ;
+                    if ( greenCount > 30 ) {
+                          tooLoud.style.opacity = 0;
+                    }
+                }
 	}
 }
 
