@@ -51,6 +51,14 @@
            max-width: 444px;
            font-weight: 200;        
         }
+        #extensionArrow {
+           position: absolute;
+           top: 10px;
+           right: 25px;
+           width: 87px;
+           transition: opacity .5s ease-in-out;
+           opacity: 0;
+        }
 	</style>
 </head>
 <body>
@@ -67,6 +75,7 @@
          <img id='sampleIcon' src='icon.png' alt=’Screen Recorder' /> icon at the top
          right of your browser to start and stop recording.
     </div>
+    <img id='extensionArrow' src='arrow_black.png' />
 	<script src="install.js"></script>
 </body>
 </html>
