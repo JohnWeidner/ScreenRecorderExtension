@@ -103,8 +103,7 @@ function StartRecording(stream){
 		OurRecorder(stream);
 	}).catch(getUserMediaError);
 
-	chrome.browserAction.setBadgeBackgroundColor({color:"#F00"});
-	chrome.browserAction.setBadgeText({text:"R E C"});
+        chrome.browserAction.setIcon({path : "icon_red.png"});
 }
 function getUserMediaError(error){
   console.log('navigator.webkitGetUserMedia() error: ', error);
@@ -112,14 +111,12 @@ function getUserMediaError(error){
 function PauseRecording(){
 	rec.pause();
 	clearInterval(runner);
-	chrome.browserAction.setBadgeBackgroundColor({color:"#ffd200"});
-	chrome.browserAction.setBadgeText({text:"PAUSE"});
+        chrome.browserAction.setIcon({path : "icon_yellow.png"});
 }
 function ResumeRecording(){
 	rec.resume();
 	runner = setInterval(mainTimer,1000);
-	chrome.browserAction.setBadgeBackgroundColor({color:"#F00"});
-	chrome.browserAction.setBadgeText({text:"R E C"});
+        chrome.browserAction.setIcon({path : "icon_red.png"});
 	chrome.notifications.clear("extfy1");
 }
 function StopRecording(){
@@ -127,6 +124,7 @@ function StopRecording(){
 	clearInterval(runner);
 	x=1;
 	rec.stop();
+        chrome.browserAction.setIcon({path : "icon.png"});
 	chrome.notifications.clear("extfy1");
 }
 function mainTimer() {
