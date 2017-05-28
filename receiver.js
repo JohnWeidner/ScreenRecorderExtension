@@ -39,6 +39,7 @@ chrome.runtime.sendMessage({checkRecState: "what"}, function(response) {
 navigator.webkitGetUserMedia({audio:true, video:false}, function(stream) {vumeter(stream);}, getUserMediaError);
 
 btnStartTab.addEventListener('click', function(event) {
+        
 	StartTabRecording();
 });
 
@@ -90,11 +91,16 @@ function StopRecording(){
 	window.close();
 }
 
+var meterWidth = 0;
+
+var cnvs = document.getElementById("vumeter");
+var cnvs_cntxt = cnvs.getContext("2d");
+
+drawLoop();
+
 function vumeter(stream){
 	var max_level_L = 0;
 	var old_level_L = 0;
-	var cnvs = document.getElementById("vumeter");
-	var cnvs_cntxt = cnvs.getContext("2d");
 
 	var microphone1 = audioContext1.createMediaStreamSource(stream);
 	microphone1.connect(gainNode1);
@@ -104,36 +110,61 @@ function vumeter(stream){
 	dest1.connect(javascriptNode);
 	javascriptNode.connect(audioContext1.destination);
         var greenCount = 0;
+        var volume = 0;
+        var averaging = 0.7;
 	javascriptNode.onaudioprocess = function(event){
-		var inpt_L = event.inputBuffer.getChannelData(0);
-		var instant_L = 0.0;
-		var sum_L = 0.0;
-		for(var i = 0; i < inpt_L.length; ++i) {
-			sum_L += inpt_L[i] * inpt_L[i];
-		}
-		instant_L = Math.sqrt(sum_L / inpt_L.length);
-		max_level_L = Math.max(max_level_L, instant_L);				
-		instant_L = Math.max( instant_L, old_level_L -0.008 );
-		old_level_L = instant_L;
+
+
+          	var buf = event.inputBuffer.getChannelData(0);
+		var bufLength = buf.length;
+		var sum = 0;
+		var x;
+
+		// Do a root-mean-square on the samples: sum up the squares...
+		for (var i=0; i<bufLength; i++) {
+		    	x = buf[i];
+    			sum += x * x;
+    		}
+
+		// ... then take the square root of the sum.
+		var rms =  Math.sqrt(sum / bufLength);
+
+		// Now smooth this out with the averaging factor applied
+		// to the previous sample - take the max here because we
+		// want "fast attack, slow release."
+		volume = Math.max(rms, volume*averaging);
+
+	        meterWidth = (cnvs.width-20)*volume*4;
+	}
+	
+}
+
+var prevMeterWidth = 0;
+var greenCount = 0;
+function drawLoop( time ) {
+        if ( meterWidth != prevMeterWidth ){
+	        prevMeterWidth = meterWidth ;
+        	var width = prevMeterWidth ;	
 		cnvs_cntxt.clearRect(0, 0, cnvs.width, cnvs.height);
 		cnvs_cntxt.fillStyle = '#00ff00';
-                var width = (cnvs.width-20)*(instant_L/max_level_L);
-                var max_green = cnvs.width * 0.75 ;
-                if ( width > max_green ) {
-   		    cnvs_cntxt.fillRect(10,10,max_green,(cnvs.height-20)); // x,y,w,h
-   		    cnvs_cntxt.fillStyle = '#ff0000';
-   		    cnvs_cntxt.fillRect(max_green,10,width-max_green,(cnvs.height-20)); // x,y,w,h
-                    tooLoud.style.opacity = 1;
-                    greenCount = 0;
-                }
-                else {
-   		    cnvs_cntxt.fillRect(10,10,width,(cnvs.height-20)); // x,y,w,h
-                    greenCount++ ;
-                    if ( greenCount > 30 ) {
-                          tooLoud.style.opacity = 0;
-                    }
-                }
-	}
+		var max_green = cnvs.width * 0.75 ;
+		if ( width > max_green ) {
+			cnvs_cntxt.fillRect(10,10,max_green,(cnvs.height-20)); // x,y,w,h
+			cnvs_cntxt.fillStyle = '#ff0000';
+			cnvs_cntxt.fillRect(max_green,10,width-max_green,(cnvs.height-20)); // x,y,w,h
+			tooLoud.style.opacity = 1;
+			greenCount = 0;
+		}
+		else {
+			cnvs_cntxt.fillRect(10,10,width,(cnvs.height-20)); // x,y,w,h
+			greenCount++ ;
+			if ( greenCount > 30 ) {
+				tooLoud.style.opacity = 0;
+			}
+		}
+        }
+	// set up the next visual callback
+	window.requestAnimationFrame( drawLoop );
 }
 
 function UpdateTimer(v) {
