@@ -1,5 +1,5 @@
 'use strict';
-const DESKTOP_MEDIA = ['screen', 'window'];
+const DESKTOP_MEDIA = ['screen', 'window','tab'];
 var recordingTab;
 var recType;
 var x=1;
@@ -50,11 +50,11 @@ chrome.tabs.onActivated.addListener(function(e){
 	if(recType=="tab" && rec.state=="recording" && e.tabId!=recordingTab){
 		PauseRecording();
 		OkToResume=false;
-		chrome.notifications.create("extfy1", {type:"basic", iconUrl:"alert.png", title:"ExtensionForYou", message:"You have leaved recording tab. Recording is paused.", requireInteraction:true});
+		chrome.notifications.create("extfy1", {type:"basic", iconUrl:"alert.png", title:"ExtensionForYou", message:"You left the tab being recorded. Recording is paused.", requireInteraction:true});
 	};
 	if(recType=="tab" && rec.state=="paused" && e.tabId!=recordingTab){
 		OkToResume=false;
-		chrome.notifications.create("extfy1", {type:"basic", iconUrl:"alert.png", title:"ExtensionForYou", message:"You have leaved recording tab. Recording is paused.", requireInteraction:true});
+		chrome.notifications.create("extfy1", {type:"basic", iconUrl:"alert.png", title:"ExtensionForYou", message:"You left the tab being recorded. Recording is paused.", requireInteraction:true});
 	};
 	if(recType=="tab" && rec.state=="paused" && e.tabId==recordingTab){
 		OkToResume=true;

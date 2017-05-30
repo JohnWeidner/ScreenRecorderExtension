@@ -16,11 +16,12 @@ window.volume = document.getElementById("volume");
 window.tooLoud = document.getElementById( "tooLoud" );
 
 var savedVol = window.localStorage.getItem( 'recVolume' );
-if ( savedVol ) {
-    window.volume.value = savedVol ; 
-    recVolume = savedVol;
-    gainNode1.gain.value = savedVol ;
+if ( savedVol==null ) {
+    savedVol = 0.5 ;
 }
+window.volume.value = savedVol ; 
+recVolume = savedVol;
+gainNode1.gain.value = savedVol ;
 
 
 chrome.runtime.sendMessage({checkRecState: "what"}, function(response) {
