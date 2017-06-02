@@ -1,5 +1,6 @@
 'use strict';
-const DESKTOP_MEDIA = ['screen', 'window','tab'];
+//const DESKTOP_MEDIA = ['screen', 'tab'];
+const DESKTOP_MEDIA = ['screen'];
 var recordingTab;
 var recType;
 var x=1;
@@ -74,22 +75,32 @@ function PrepareRecording(recVolume){
 	chrome.desktopCapture.chooseDesktopMedia(DESKTOP_MEDIA, onAccessApproved);
 }
 function onAccessApproved(id, options) {
+        //console.log( 'onAccessApproved id=' + id + ' options=' + options );
 	if (!id) {
 		//console.log('Access rejected.');
 		return;
 	}
-
-	navigator.webkitGetUserMedia({
+        var constraints = {
 		audio:false, 
 		video:{mandatory: {
 				chromeMediaSource: 'desktop',
 				chromeMediaSourceId: id,
 				maxWidth:screen.width,
 				maxHeight:screen.height
-				}}},
+                                //maxWidth:1280,
+                                //maxHeight:720
+				}}} ;
+/*
+	navigator.webkitGetUserMedia(
+                constraints,
 		StartRecording, 
 		getUserMediaError
 	);
+*/
+        navigator.mediaDevices.getUserMedia(constraints)
+           .then( StartRecording )
+           .catch( getUserMediaError );
+
 }
 function StartRecording(stream){
 	runner = setInterval(mainTimer,1000);
