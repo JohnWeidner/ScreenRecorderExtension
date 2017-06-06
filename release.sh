@@ -4,7 +4,7 @@ rm -f build/*
 cp arrow.png build/.
 cp arrow_black.png build/.
 cp background.js build/.
-cp icon.png build/.
+cp /Users/john/Documents/UserBob/icon.png build/.
 cp icon_red.png build/.
 cp install.html build/.
 cp install.js build/.

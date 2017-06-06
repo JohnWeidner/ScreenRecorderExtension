@@ -8,6 +8,7 @@ var gainNode1 = audioContext1.createGain();
 window.winRec = document.getElementById("recWindow");
 window.winPause = document.getElementById("pauseWindow");
 window.btnStart = document.getElementById("start");
+window.talkToTestMic = document.getElementById("testMic");
 window.btnStartTab = document.getElementById("starttab");
 window.btnResume = document.getElementById("resume");
 window.btnStop = document.getElementById("stop");
@@ -34,6 +35,8 @@ chrome.runtime.sendMessage({checkRecState: "what"}, function(response) {
 	}else{
 		winRec.style.display="block";
 		winPause.style.display="none";
+                talkToTestMic.style.display="block" ;
+                btnStart.style.display="none";
 	}
 });
 
@@ -149,6 +152,10 @@ function drawLoop( time ) {
 		cnvs_cntxt.clearRect(0, 0, cnvs.width, cnvs.height);
 		cnvs_cntxt.fillStyle = '#00ff00';
 		var max_green = cnvs.width * 0.75 ;
+                if ( width > 20 ) {
+                    talkToTestMic.style.display="none" ;
+                    btnStart.style.display="block";
+                }
 		if ( width > max_green ) {
 			cnvs_cntxt.fillRect(10,10,max_green,(cnvs.height-20)); // x,y,w,h
 			cnvs_cntxt.fillStyle = '#ff0000';
