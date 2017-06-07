@@ -13,11 +13,14 @@ var gainNode = audioContext.createGain();
 var microphone;
 
 chrome.runtime.onInstalled.addListener(function (details) {
-    chrome.tabs.create({
-        url: chrome.extension.getURL("install.html"),
-        active: true
-    });
+    if ( details.reason == "install" ) {
+        chrome.tabs.create({
+            url: chrome.extension.getURL("install.html"),
+            active: true
+        });
+    }
 });
+
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       //console.log( 'in listener recType=' + recType + ' pauseRecording=' + request.pauseRecording );
@@ -82,14 +85,18 @@ function onAccessApproved(id, options) {
 	}
         var constraints = {
 		audio:false, 
-		video:{mandatory: {
+		video:{
+			minFrameRate: 15,
+                        mandatory: {
 				chromeMediaSource: 'desktop',
 				chromeMediaSourceId: id,
 				maxWidth:screen.width,
 				maxHeight:screen.height
                                 //maxWidth:1280,
                                 //maxHeight:720
-				}}} ;
+			}
+		}
+	} ;
 /*
 	navigator.webkitGetUserMedia(
                 constraints,
@@ -146,4 +153,3 @@ function mainTimer() {
 	date.setSeconds(x);
 	var result = date.toISOString().substr(11, 8);
 };
-//console.log( 'end of background.js' );
