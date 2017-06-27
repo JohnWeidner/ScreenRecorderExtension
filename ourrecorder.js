@@ -5137,10 +5137,10 @@ exports.default = EBMLReader;
 function put(elm) {
     if (elm.type === "m") {
         if (elm.isEnd) {
-            console.groupEnd();
+            //console.groupEnd();
         }
         else {
-            console.group(elm.name + ":" + elm.tagStart);
+            //console.group(elm.name + ":" + elm.tagStart);
         }
     }
     else if (elm.type === "b") {
@@ -5149,11 +5149,11 @@ function put(elm) {
         //const o = EBML.tools.ebmlBlock(elm.value);
         //console.log(elm.name, elm.type, o.trackNumber, o.timecode);
         //}else{
-        console.log(elm.name, elm.type);
+        //console.log(elm.name, elm.type);
         //}
     }
     else {
-        console.log(elm.name, elm.tagStart, elm.type, elm.value);
+        //console.log(elm.name, elm.tagStart, elm.type, elm.value);
     }
 }
 exports.put = put;
