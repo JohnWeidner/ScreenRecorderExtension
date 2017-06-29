@@ -12,7 +12,6 @@ window.talkToTestMic = document.getElementById("testMic");
 window.btnStartTab = document.getElementById("starttab");
 window.btnResume = document.getElementById("resume");
 window.btnStop = document.getElementById("stop");
-window.btnOptions = document.getElementById("options");
 window.ourTimer = document.getElementById("timer");
 window.volume = document.getElementById("volume");
 window.tooLoud = document.getElementById( "tooLoud" );
@@ -58,13 +57,6 @@ btnResume.addEventListener('click', function(event) {
 
 btnStop.addEventListener('click', function(event) {
 	StopRecording();
-});
-btnOptions.addEventListener('click', function(event) {
-  if (chrome.runtime.openOptionsPage) {
-    chrome.runtime.openOptionsPage();
-  } else {
-    window.open(chrome.runtime.getURL('options.html'));
-  }
 });
 
 volume.addEventListener('change', changeRecordingLevel );
