@@ -5286,10 +5286,10 @@ window.OurRecorder = function (stream) {
                     new _1.Decoder().decode(refinedBuf).forEach(function (elm) { return _reader.read(elm); });
                     _reader.stop();
                     b = URL.createObjectURL(refinedWebM);
-                    a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    a.href = b;
+                    //a = document.createElement("a");
+                    //document.body.appendChild(a);
+                    //a.style = "display: none";
+                    //a.href = b;
                     //a.download = "screenVideo.webm";
 					chrome.storage.sync.get(function(items) {
 						var fname="screenVideo.webm";
@@ -5301,8 +5301,13 @@ window.OurRecorder = function (stream) {
 								fname = items.opt_curTab + ".webm";
 								break;
 						}
-						a.download = fname;
-						a.click();
+						chrome.downloads.download({
+						  url : b,
+						  filename : fname,
+						  saveAs : true
+						});
+						//a.download = fname;
+						//a.click();
 					});
                     return [2 /*return*/];
             }
