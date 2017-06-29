@@ -1,26 +1,31 @@
     {
       "name": "Screen Recorder",
       "description": "Record a narrated video of your computer screen",
-      "version": "0.10",
+      "version": "0.11",
       "manifest_version": 2,
       "icons": {
-         "16": "icon.png",
-         "128": "icon.png"
+        "16": "icon.png",
+        "128": "icon.png"
       },
       "background": {
-           "scripts": [ 
+        "scripts": [ 
 		"background.js",
 		"ourrecorder.js"
        ]
       },
       "browser_action": {
-           "default_icon": "icon.png", 
+       "default_icon": "icon.png", 
 	   "default_popup": "receiver.html"
       },
-
+	  "options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	  },
       "permissions": [
-	"desktopCapture",
-	"notifications",
-	"unlimitedStorage"
+		"desktopCapture",
+		"notifications",
+		"activeTab",
+		"storage",
+		"unlimitedStorage"
        ]
     }
