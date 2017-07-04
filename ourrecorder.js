@@ -5286,12 +5286,29 @@ window.OurRecorder = function (stream) {
                     new _1.Decoder().decode(refinedBuf).forEach(function (elm) { return _reader.read(elm); });
                     _reader.stop();
                     b = URL.createObjectURL(refinedWebM);
-                    a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    a.href = b;
-                    a.download = "screenVideo.webm";
-                    a.click();
+                    //a = document.createElement("a");
+                    //document.body.appendChild(a);
+                    //a.style = "display: none";
+                    //a.href = b;
+                    //a.download = "screenVideo.webm";
+					chrome.storage.sync.get(function(items) {
+						var fname="screenVideo.webm";
+						switch(items.opt_dwnld_type) {
+							case "custom1":
+								fname = items.opt_custom_fname + ".webm";
+								break;
+							case "custom2":
+								fname = items.opt_curTab + ".webm";
+								break;
+						}
+						chrome.downloads.download({
+						  url : b,
+						  filename : fname,
+						  saveAs : true
+						});
+						//a.download = fname;
+						//a.click();
+					});
                     return [2 /*return*/];
             }
         });

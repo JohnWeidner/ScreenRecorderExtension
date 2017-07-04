@@ -181,3 +181,22 @@ function UpdateTimer(v) {
 	var result = date.toISOString().substr(11, 8);
     ourTimer.innerHTML = result;
 };
+
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+	chrome.storage.sync.set({
+		opt_curTab: extractHostname(tabs[0].url)
+	}, function() {});
+});
+
+function extractHostname(url) {
+    var hostname;
+    if (url.indexOf("://") > -1) {
+        hostname = url.split('/')[2];
+    }
+    else {
+        hostname = url.split('/')[0];
+    }
+    hostname = hostname.split(':')[0];
+    hostname = hostname.split('?')[0];
+    return hostname;
+}
