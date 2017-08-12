@@ -13,5 +13,7 @@ cp manifest.json build/.
 cp ourrecorder.js build/.
 cp receiver.html build/.
 cp receiver.js build/.
+cp options.js build/.
+cp options.html build/.
 cd build
 zip ../release.zip *
