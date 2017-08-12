@@ -1,0 +1,83 @@
+<html>
+<head>
+	<title>Screen Recorder</title>
+        <style>
+            #tooLoud {
+                color: red;
+                text-align: right;
+                font-weight: 600;
+                opacity: 0;
+                transition: opacity .5s ease-in-out;
+            }
+            #vumeter {
+	         background-color: #dadada;
+            }
+            body, html {
+                 height: 200px;
+                 padding: 10px;
+                 background-color: antiquewhite ;
+            }
+            #instructions {
+                 font-size: 12pt;
+                 margin-bottom: 20px;
+            }
+            #volume {
+                 position: relative;
+                 top: 4px;
+            }
+            button {
+                 padding: 7px 15px;
+                 margin: 0 auto;
+            }
+            #start {
+                 display: none;
+                 margin-top: 15px;
+            }
+            #testMic {
+                 display: block ;
+                 margin-top: 15px;
+                 text-align: center;
+                 font-size: 1.4em;
+                 color: red;
+            }
+            #starttab {
+                 display: none;
+            }
+            #resume, #stop {
+                 width: 120px;
+                 margin: 10px;
+				 padding-left: 0px;
+                 padding-right: 0px;
+            }
+            #resume {
+                 margin-top: 40px;
+            }
+            #pauseWindow {
+                 padding-top: 10px;
+                 text-align: center ;
+            }
+        </style>
+</head>
+<body>
+	<div id="recWindow">
+                <div id='instructions'>
+                    Test your mic recording level by talking at a normal volume.  If the meter displays
+                    red, decrease the level below.
+                </div>
+		<canvas width="320px" height="30px" id="vumeter"></canvas>
+		Mic Level:&nbsp;&nbsp; - <input type="range" min="0" max="1" step="0.01" id="volume" value="1"/> +
+		<br>
+                <div id='tooLoud'>Too Loud</div>
+		<button id="start">Start Recording</button>
+                <div id='testMic'>Talk to test mic</div>
+		<button id="starttab">Start tab capture</button>
+	</div>
+	<div id="pauseWindow">
+		<h3 id="timer"></h3>
+                Recording is paused.
+		<button id="resume">Resume Recording</button>
+		<button id="stop">End Recording</button>
+	</div>
+	<script src="receiver.js"></script>
+</body>
+</html>

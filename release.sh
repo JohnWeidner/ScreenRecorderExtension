@@ -1,5 +1,6 @@
 rm release.zip
 vi manifest.json
+mkdir build
 rm -f build/*
 cp arrow.png build/.
 cp arrow_black.png build/.
