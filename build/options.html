@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Options</title>
+    <style>
+      fieldset {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <fieldset>
+      <legend>Download as:</legend>
+      <input
+        type="radio"
+        name="downloadas"
+        id="custom1"
+        value="custom"
+        checked
+      />
+      custom filename:
+      <input type="text" id="custom_filename" value="screenVideo" /><br />
+      <input type="radio" name="downloadas" id="custom2" value="url" /> use
+      domain name of site being recorded<br />
+    </fieldset>
+
+    <div id="status"></div>
+    <button id="save">Save</button>
+
+    <script src="src/options.js"></script>
+  </body>
+</html>

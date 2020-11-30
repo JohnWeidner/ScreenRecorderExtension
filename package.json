@@ -1,0 +1,22 @@
+{
+  "name": "screen-recorder-extension",
+  "version": "0.16.3",
+  "description": "Google Chrome Extension for screen recorder",
+  "main": "src/background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnWeidner/ScreenRecorderExtension.git"
+  },
+  "keywords": [
+    "screen-recorder-chrome-extension"
+  ],
+  "author": "JohnWeidner and Contributors",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohnWeidner/ScreenRecorderExtension/issues"
+  },
+  "homepage": "https://github.com/JohnWeidner/ScreenRecorderExtension#readme"
+}

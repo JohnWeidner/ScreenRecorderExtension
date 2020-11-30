@@ -1,19 +1,21 @@
 rm release.zip
-vi manifest.json
+# vi manifest.json
+rm -rf build
 mkdir build
-rm -f build/*
-cp arrow.png build/.
-cp arrow_black.png build/.
-cp background.js build/.
-cp /Users/john/Documents/UserBob/icon.png build/.
-cp icon_red.png build/.
-cp install.html build/.
-cp install.js build/.
+mkdir build/src
+mkdir build/assets
+cp src/background.js build/src/.
+cp src/install.js build/src/.
 cp manifest.json build/.
-cp ourrecorder.js build/.
-cp receiver.html build/.
-cp receiver.js build/.
-cp options.js build/.
-cp options.html build/.
+cp src/ourrecorder.js build/src/.
+cp src/receiver.js build/src/.
+cp src/options.js build/src/.
+cp assets/arrow.png build/assets/.
+cp assets/arrow_black.png build/assets/.
+cp assets/icon.png build/assets/.
+cp assets/icon_red.png build/assets/.
+cp src/install.html build/.
+cp src/receiver.html build/.
+cp src/options.html build/.
 cd build
 zip ../release.zip *
