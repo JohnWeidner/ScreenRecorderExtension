@@ -2,7 +2,7 @@
   "name": "screen-recorder-extension",
   "version": "1.0.0",
   "description": "Google Chrome Extension for screen recorder",
-  "main": "background.js",
+  "main": "src/background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

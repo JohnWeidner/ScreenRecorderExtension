@@ -1,7 +1,6 @@
 'use strict';
 
-//const DESKTOP_MEDIA = ['screen', 'tab'];
-const DESKTOP_MEDIA = ['screen'];
+const DESKTOP_MEDIA = ['screen', 'window', 'tab'];
 var recordingTab;
 var recType;
 var x = 1;
@@ -13,7 +12,7 @@ var audioContext;
 var gainNode;
 var microphone;
 
-console.log('in background.js');
+console.log('in src/background.js');
 
 chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason == 'install') {
@@ -152,7 +151,7 @@ function StartRecording(stream) {
   chrome.browserAction.setIcon({ path: 'icon_red.png' });
 }
 function getUserMediaError(error) {
-  alert('background.js: getUserMedia() error: ', error);
+  alert('src/background.js: getUserMedia() error: ', error);
 }
 function PauseRecording() {
   rec.pause();
