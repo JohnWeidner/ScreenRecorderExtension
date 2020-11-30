@@ -14,8 +14,8 @@ cp assets/arrow.png build/assets/.
 cp assets/arrow_black.png build/assets/.
 cp assets/icon.png build/assets/.
 cp assets/icon_red.png build/assets/.
-cp install.html build/.
-cp receiver.html build/.
-cp options.html build/.
+cp src/install.html build/.
+cp src/receiver.html build/.
+cp src/options.html build/.
 cd build
 zip ../release.zip *

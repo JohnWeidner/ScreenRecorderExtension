@@ -17,7 +17,7 @@ console.log('in src/background.js');
 chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason == 'install') {
     chrome.tabs.create({
-      url: chrome.extension.getURL('install.html'),
+      url: chrome.extension.getURL('src/install.html'),
       active: true,
     });
   }

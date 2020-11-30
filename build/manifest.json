@@ -12,10 +12,10 @@
   },
   "browser_action": {
     "default_icon": "assets/icon.png",
-    "default_popup": "receiver.html"
+    "default_popup": "src/receiver.html"
   },
   "options_ui": {
-    "page": "options.html",
+    "page": "src/options.html",
     "chrome_style": true
   },
   "permissions": [
