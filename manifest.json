@@ -1,32 +1,31 @@
-    {
-      "name": "Screen Recorder",
-      "description": "Records a narrated video of your computer screen",
-      "version": "0.16",
-      "manifest_version": 2,
-      "icons": {
-        "16": "icon.png",
-        "128": "icon.png"
-      },
-      "background": {
-        "scripts": [ 
-		"background.js",
-		"ourrecorder.js"
-       ]
-      },
-      "browser_action": {
-       "default_icon": "icon.png", 
-	   "default_popup": "receiver.html"
-      },
-	  "options_ui": {
-		"page": "options.html",
-		"chrome_style": true
-	  },
-      "permissions": [
-		"desktopCapture",
-		"notifications",
-		"activeTab",
-		"storage",
-		"unlimitedStorage",
-		"downloads"
-       ]
-    }
+{
+  "name": "Screen Recorder",
+  "description": "Records a narrated video of your computer screen",
+  "version": "0.16.2",
+  "manifest_version": 2,
+  "icons": {
+    "16": "icon.png",
+    "128": "icon.png"
+  },
+  "background": {
+    "scripts": ["background.js", "ourrecorder.js"]
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "receiver.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "tabCapture",
+    "pageCapture",
+    "desktopCapture",
+    "notifications",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "downloads"
+  ]
+}
