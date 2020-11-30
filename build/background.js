@@ -9,8 +9,8 @@ var rec=[];
 var runner;
 var OkToResume;
 var volume;
-var audioContext = new AudioContext();
-var gainNode = audioContext.createGain();
+var audioContext ;
+var gainNode ;
 var microphone;
 
 console.log( 'in background.js' );
@@ -107,6 +107,8 @@ function onAccessApproved(id, options) {
 
 }
 function StartRecording(stream){
+	audioContext = new AudioContext();
+	gainNode = audioContext.createGain();
 	runner = setInterval(mainTimer,1000);
 
 	navigator.mediaDevices.getUserMedia({audio:true}).then(function(audioStream) {

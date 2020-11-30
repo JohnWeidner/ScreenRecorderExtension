@@ -1,11 +1,11 @@
 rm release.zip
-vi manifest.json
+# vi manifest.json
 mkdir build
 rm -f build/*
 cp arrow.png build/.
 cp arrow_black.png build/.
 cp background.js build/.
-cp /Users/john/Documents/UserBob/icon.png build/.
+cp icon.png build/.
 cp icon_red.png build/.
 cp install.html build/.
 cp install.js build/.
