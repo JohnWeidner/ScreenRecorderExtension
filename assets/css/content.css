@@ -1,0 +1,9 @@
+/* This is used? */
+
+#cursor {
+  position: absolute;
+  z-index: 10000;
+  width: 32px;
+  height: 32px;
+  background: transparent url(cursor.png) 0 0 no-repeat;
+}

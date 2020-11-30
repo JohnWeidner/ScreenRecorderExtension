@@ -69,7 +69,7 @@ function changeRecordingLevel(event) {
 }
 
 function getUserMediaError(error) {
-  alert('receiver.js: GetUserMedia() error: ', error);
+  alert('src/receiver.js: GetUserMedia() error: ', error);
 }
 
 function StartTabRecording() {

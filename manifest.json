@@ -1,14 +1,14 @@
 {
   "name": "Screen Recorder",
   "description": "Records a narrated video of your computer screen",
-  "version": "0.16.2",
+  "version": "0.16.3",
   "manifest_version": 2,
   "icons": {
     "16": "assets/icon.png",
     "128": "assets/icon.png"
   },
   "background": {
-    "scripts": ["src/background.js", "ourrecorder.js"]
+    "scripts": ["src/background.js", "src/ourrecorder.js"]
   },
   "browser_action": {
     "default_icon": "assets/icon.png",

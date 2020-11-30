@@ -13,7 +13,7 @@ navigator.mediaDevices
       });
   })
   .catch(function (error) {
-    console.log('install.js: getUserMedia() error: ', error);
+    console.log('src/install.js: getUserMedia() error: ', error);
   });
 
 var fadeOut = false;

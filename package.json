@@ -1,6 +1,6 @@
 {
   "name": "screen-recorder-extension",
-  "version": "1.0.0",
+  "version": "0.16.3",
   "description": "Google Chrome Extension for screen recorder",
   "main": "src/background.js",
   "scripts": {
