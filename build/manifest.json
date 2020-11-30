@@ -4,14 +4,14 @@
   "version": "0.16.2",
   "manifest_version": 2,
   "icons": {
-    "16": "icon.png",
-    "128": "icon.png"
+    "16": "assets/icon.png",
+    "128": "assets/icon.png"
   },
   "background": {
     "scripts": ["src/background.js", "ourrecorder.js"]
   },
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "assets/icon.png",
     "default_popup": "receiver.html"
   },
   "options_ui": {

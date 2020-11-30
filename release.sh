@@ -3,11 +3,12 @@ rm release.zip
 rm -rf build
 mkdir build
 mkdir build/src
-cp arrow.png build/.
-cp arrow_black.png build/.
+mkdir build/assets
 cp src/background.js build/src/.
-cp icon.png build/.
-cp icon_red.png build/.
+cp assets/arrow.png build/assets/.
+cp assets/arrow_black.png build/assets/.
+cp assets/icon.png build/assets/.
+cp assets/icon_red.png build/assets/.
 cp install.html build/.
 cp install.js build/.
 cp manifest.json build/.
