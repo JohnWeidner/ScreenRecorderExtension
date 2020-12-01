@@ -17,7 +17,7 @@ console.log('in src/background.js');
 chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason == 'install') {
     chrome.tabs.create({
-      url: chrome.extension.getURL('src/install.html'),
+      url: chrome.extension.getURL('../static/install.html'),
       active: true,
     });
   }
@@ -64,7 +64,7 @@ chrome.tabs.onActivated.addListener(function (e) {
     OkToResume = false;
     chrome.notifications.create('extfy1', {
       type: 'basic',
-      iconUrl: 'assets/alert.png',
+      iconUrl: '../assets/alert.png',
       title: 'ExtensionForYou',
       message: 'You left the tab being recorded. Recording is paused.',
       requireInteraction: true,
@@ -74,7 +74,7 @@ chrome.tabs.onActivated.addListener(function (e) {
     OkToResume = false;
     chrome.notifications.create('extfy1', {
       type: 'basic',
-      iconUrl: 'assets/alert.png',
+      iconUrl: '../assets/alert.png',
       title: 'ExtensionForYou',
       message: 'You left the tab being recorded. Recording is paused.',
       requireInteraction: true,
@@ -84,7 +84,7 @@ chrome.tabs.onActivated.addListener(function (e) {
     OkToResume = true;
     chrome.notifications.create('extfy1', {
       type: 'basic',
-      iconUrl: 'assets/ok.png',
+      iconUrl: '../assets/ok.png',
       title: 'ExtensionForYou',
       message: 'You are now ready to resume recording.',
       requireInteraction: true,
@@ -148,7 +148,7 @@ function StartRecording(stream) {
     })
     .catch(getUserMediaError);
 
-  chrome.browserAction.setIcon({ path: 'assets/icon_red.png' });
+  chrome.browserAction.setIcon({ path: '../assets/icon_red.png' });
 }
 function getUserMediaError(error) {
   alert('src/background.js: getUserMedia() error: ', error);
@@ -156,12 +156,12 @@ function getUserMediaError(error) {
 function PauseRecording() {
   rec.pause();
   clearInterval(runner);
-  chrome.browserAction.setIcon({ path: 'assets/icon.png' });
+  chrome.browserAction.setIcon({ path: '../assets/icon.png' });
 }
 function ResumeRecording() {
   rec.resume();
   runner = setInterval(mainTimer, 1000);
-  chrome.browserAction.setIcon({ path: 'assets/icon_red.png' });
+  chrome.browserAction.setIcon({ path: '../assets/icon_red.png' });
   chrome.notifications.clear('extfy1');
 }
 function StopRecording() {
@@ -169,7 +169,7 @@ function StopRecording() {
   clearInterval(runner);
   x = 1;
   rec.stop();
-  chrome.browserAction.setIcon({ path: 'assets/icon.png' });
+  chrome.browserAction.setIcon({ path: '../assets/icon.png' });
   chrome.notifications.clear('extfy1');
 }
 function mainTimer() {

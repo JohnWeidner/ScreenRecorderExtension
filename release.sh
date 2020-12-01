@@ -4,6 +4,7 @@ rm -rf build
 mkdir build
 mkdir build/src
 mkdir build/assets
+mkdir build/static
 cp src/background.js build/src/.
 cp src/install.js build/src/.
 cp manifest.json build/.
@@ -14,8 +15,8 @@ cp assets/arrow.png build/assets/.
 cp assets/arrow_black.png build/assets/.
 cp assets/icon.png build/assets/.
 cp assets/icon_red.png build/assets/.
-cp src/install.html build/.
-cp src/receiver.html build/.
-cp src/options.html build/.
+cp static/install.html build/static/.
+cp static/receiver.html build/static/.
+cp static/options.html build/static/.
 cd build
 zip ../release.zip *
