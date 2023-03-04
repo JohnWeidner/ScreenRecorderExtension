@@ -12,9 +12,14 @@ window.talkToTestMic = document.getElementById('testMic');
 window.btnStartTab = document.getElementById('starttab');
 window.btnResume = document.getElementById('resume');
 window.btnStop = document.getElementById('stop');
+window.btnCancel = document.getElementById('cancel');
 window.ourTimer = document.getElementById('timer');
 window.volume = document.getElementById('volume');
 window.tooLoud = document.getElementById('tooLoud');
+window.monitorState = document.getElementById('monitorState');
+window.waiting1 = document.getElementById('waiting1');
+window.waiting2 = document.getElementById('waiting2');
+window.waiting3 = document.getElementById('waiting3');
 
 var savedVol = window.localStorage.getItem('recVolume');
 if (savedVol == null) {
@@ -25,12 +30,21 @@ recVolume = savedVol;
 gainNode1.gain.value = savedVol;
 
 chrome.runtime.sendMessage({ checkRecState: 'what' }, function (response) {
+  // alert(response.state.value);
+  // alert(response.state);
+
   if (response.state == 'recording' || response.state == 'paused') {
     winRec.style.display = 'none';
     winPause.style.display = 'block';
     PauseRecording();
     UpdateTimer(response.timer);
-  } else {
+  }
+  else if(response.state == 'inactive'){
+    winRec.style.display = 'none';
+    winPause.style.display = 'block';
+    waitingDisplay();
+  }
+  else{
     winRec.style.display = 'block';
     winPause.style.display = 'none';
     talkToTestMic.style.display = 'block';
@@ -42,6 +56,8 @@ navigator.mediaDevices
   .getUserMedia({ audio: true, video: false })
   .then(vumeter)
   .catch(getUserMediaError);
+
+ 
 
 btnStartTab.addEventListener('click', function (event) {
   StartTabRecording();
@@ -57,6 +73,33 @@ btnResume.addEventListener('click', function (event) {
 
 btnStop.addEventListener('click', function (event) {
   StopRecording();
+  console.log(new Date().toLocaleTimeString());
+  waitingDisplay();
+});
+
+function waitingDisplay(){
+  ourTimer.innerHTML = '';
+  monitorState.innerHTML = '';
+  btnResume.hidden = 'true';
+  btnStop.hidden = 'true';
+
+  waiting1.innerHTML = 'Preparing video. Please wait...<br/>';
+  
+  var myImage = new Image(120, 20);
+  myImage.src = '../assets/busy.gif';  
+  waiting2.append(myImage);
+  btnCancel.hidden = false;
+
+  setInterval(function(){ 
+    waiting3.innerHTML = new Date().toLocaleTimeString();
+  }, 1000);
+
+}
+
+btnCancel.addEventListener('click', function (event) {
+  
+  chrome.runtime.sendMessage({ cancelRecording: 'on' }, function (response) {});
+  window.close();
 });
 
 volume.addEventListener('change', changeRecordingLevel);
@@ -96,8 +139,8 @@ function ResumeRecording() {
 }
 
 function StopRecording() {
+  console.log(new Date().toLocaleTimeString());
   chrome.runtime.sendMessage({ stopRecording: 'on' }, function (response) {});
-  window.close();
 }
 
 var meterWidth = 0;
@@ -203,3 +246,11 @@ function extractHostname(url) {
   hostname = hostname.split('?')[0];
   return hostname;
 }
+
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if(request.showDialog == 'success'){
+    chrome.runtime.sendMessage({ initialmsg: 'on' }, function (response) {});
+    window.close();
+  } 
+});  

@@ -5317,7 +5317,9 @@
                 this.endTag(elm);
               }
             } else {
-              this.writeTag(elm);
+             if(elm.name != 'unknown') {
+                this.writeTag(elm);
+              }
             }
             return this.flush();
           };
@@ -5973,7 +5975,7 @@
                   ondataavailable = function (ev) {
                     var chunk = ev.data;
                     webM = new Blob([webM, chunk], { type: chunk.type });
-                    console.log(chunk.size, webM.size);
+                    // console.log(chunk.size, webM.size);
                     var task = function () {
                       return __awaiter(_this, void 0, void 0, function () {
                         var buf, elms;
@@ -6051,12 +6053,14 @@
                     return _reader.read(elm);
                   });
                   _reader.stop();
+                  // console.log(new Date().toLocaleTimeString());
                   b = URL.createObjectURL(refinedWebM);
                   //a = document.createElement("a");
                   //document.body.appendChild(a);
                   //a.style = "display: none";
                   //a.href = b;
                   //a.download = "screenVideo.webm";
+
                   chrome.storage.sync.get(function (items) {
                     var fname = 'screenVideo.webm';
                     switch (items.opt_dwnld_type) {
@@ -6067,11 +6071,29 @@
                         fname = items.opt_curTab + '.webm';
                         break;
                     }
-                    chrome.downloads.download({
-                      url: b,
-                      filename: fname,
-                      saveAs: true,
+
+                    var cancelState = false;
+
+                    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+                      if (request.cancelRecording == 'on'){
+                        cancelState = true;
+                        console.log('cancelState : ' + cancelState);
+                      }
                     });
+                    
+                    // setTimeout(() => {   
+                      if(cancelState == true) return;
+                      chrome.downloads.download({
+                        url: b,
+                        filename: fname,
+                        saveAs: true,
+                      });
+
+                      
+                      chrome.runtime.sendMessage({ showDialog: 'success' }, function (response) {});
+  
+                    // }, 1000 * 10);
+
                     //a.download = fname;
                     //a.click();
                   });

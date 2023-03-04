@@ -5317,7 +5317,9 @@
                 this.endTag(elm);
               }
             } else {
-              this.writeTag(elm);
+             if(elm.name != 'unknown') {
+                this.writeTag(elm);
+              }
             }
             return this.flush();
           };

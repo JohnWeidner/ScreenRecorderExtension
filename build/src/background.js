@@ -1,6 +1,6 @@
 'use strict';
 
-const DESKTOP_MEDIA = ['screen', 'window', 'tab'];
+const DESKTOP_MEDIA = ['window', 'tab'];
 var recordingTab;
 var recType;
 var x = 1;
@@ -11,8 +11,9 @@ var volume;
 var audioContext;
 var gainNode;
 var microphone;
+var now_rec="";
 
-console.log('in src/background.js');
+// console.log('in src/background.js');
 
 chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason == 'install') {
@@ -28,7 +29,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.prepareRecording == 'on') PrepareRecording(request.recVolume);
   if (request.prepareTabRecording == 'on')
     PrepareTabRecording(request.recVolume);
-  if (request.stopRecording == 'on') StopRecording();
+  if (request.stopRecording == 'on'){
+    // console.log(new Date().toLocaleTimeString());
+    
+    StopRecording();
+  }
+  if(request.cancelRecording == "on"){
+    CancelRecording();
+  }
+  if(request.initialmsg == "on"){
+    InitialMag();
+  }
   if (request.pauseRecording == 'on') {
     if (recType == 'screen') PauseRecording();
     if (recType == 'tab') PauseTabRecording();
@@ -39,7 +50,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   if (request.checkRecState == 'what') {
     var curState = rec.state;
-    sendResponse({ state: curState, timer: x });
+    sendResponse({ state: now_rec, timer: x });
   }
 });
 
@@ -58,7 +69,7 @@ function PrepareTabRecording(recVolume) {
 }
 
 chrome.tabs.onActivated.addListener(function (e) {
-  //console.log( 'in tabs.onActivated recType=' + recType + ' rec.state=' + rec.state );
+  console.log( 'in tabs.onActivated recType=' + recType + ' rec.state=' + rec.state );
   if (recType == 'tab' && rec.state == 'recording' && e.tabId != recordingTab) {
     PauseRecording();
     OkToResume = false;
@@ -99,6 +110,7 @@ function PauseTabRecording() {
   PauseRecording();
 }
 function PrepareRecording(recVolume) {
+  now_rec = "recording";
   recType = 'screen';
   volume = recVolume;
   chrome.desktopCapture.chooseDesktopMedia(DESKTOP_MEDIA, onAccessApproved);
@@ -155,22 +167,35 @@ function getUserMediaError(error) {
 }
 function PauseRecording() {
   rec.pause();
+  now_rec = "paused";
   clearInterval(runner);
   chrome.browserAction.setIcon({ path: 'assets/icon.png' });
 }
 function ResumeRecording() {
+  now_rec = "recording";
   rec.resume();
   runner = setInterval(mainTimer, 1000);
   chrome.browserAction.setIcon({ path: 'assets/icon_red.png' });
   chrome.notifications.clear('extfy1');
 }
 function StopRecording() {
+  // now_rec = "inactive";
+  // setTimeout(() => {
+    now_rec = "inactive";
+  // }, 1000*10);
   chrome.browserAction.setBadgeText({ text: '' });
   clearInterval(runner);
   x = 1;
   rec.stop();
   chrome.browserAction.setIcon({ path: 'assets/icon.png' });
   chrome.notifications.clear('extfy1');
+}
+function InitialMag() {
+  now_rec = "";
+  console.log("bacg"+new Date().toLocaleTimeString());
+}
+function CancelRecording() {
+  now_rec = "";
 }
 function mainTimer() {
   x += 1;
