@@ -8,6 +8,7 @@ A Chrome extension for recording your computer screen and audio from your comput
 
 
 ### Contributors
-- Creator: Joh Weidner [https://github.com/JohnWeidner/ScreenRecorderExtension]
+- Creator: John Weidner [https://github.com/JohnWeidner/ScreenRecorderExtension]
 - Dejan Zdravkovic
 - Gabriel Henrique [https://github.com/gabrieldesousah/ScreenRecorderExtension]
+- Stanica (freelancer)
