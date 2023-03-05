@@ -1,7 +1,7 @@
 {
   "name": "Screen Recorder",
   "description": "Records a narrated video of your computer screen",
-  "version": "0.20.3",
+  "version": "0.20.4",
   "manifest_version": 2,
   "icons": {
     "16": "assets/icon.png",

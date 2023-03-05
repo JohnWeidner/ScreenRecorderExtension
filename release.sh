@@ -19,4 +19,4 @@ cp src/install.html build/src/.
 cp src/receiver.html build/src/.
 cp src/options.html build/src/.
 cd build
-zip ../release.zip *
+zip ../release.zip -r *
